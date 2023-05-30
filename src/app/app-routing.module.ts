@@ -13,7 +13,7 @@ import { UploadimageComponent } from './uploadimage/uploadimage.component';
 const routes: Routes = [
   {path:"posts",component:PostsComponent},
   {path:"posts/:id",component:SinglepostComponent},
-  {path:"",redirectTo:"posts",pathMatch:"full"},
+  {path:"*",redirectTo:"posts",pathMatch:"full"},
   {path:"dashboard",component:DashboardComponent,canActivate:[LoginGuard]},
   {path:"dashboard/uploadimg",component:UploadimageComponent,canActivate:[LoginGuard]},
   {path:"help",component:HelpformComponent},
