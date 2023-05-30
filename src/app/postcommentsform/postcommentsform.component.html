@@ -1,0 +1,47 @@
+<div
+  *ngIf="logged() === true"
+  class="container-fluid bg-black text-success align-items-center align-content-center"
+>
+  <form #commentForm="ngForm" (ngSubmit)="addComment(commentForm)">
+    <div class="form-group mb-2 col-sm-12">
+      <div class="d-flex align-items-center mb-5">
+        <img
+          style="height: 2.5rem; width: 2.5rem; margin-left: 12%"
+          *ngIf="
+            user?.profile_image && user.profile_image !== 'default.jpg';
+            else defaultImage
+          "
+          [src]="serverurl+'/'+user?.profile_image"
+          class="rounded-circle"
+        />
+        <ng-template #defaultImage>
+          <img
+            style="height: 2.5rem; width: 2.5rem; margin-left: 12%"
+            src="../../assets/Default_p.jpg"
+            class="d-block rounded-circle"
+          />
+        </ng-template>
+        <input
+          style="color: rgb(0, 255, 0); margin-left: 1%;"
+          type="text"
+          class="form-control-lg bg-black w-75"
+          placeholder="Yorum yazısı giriniz"
+          #content="ngModel"
+          [(ngModel)]="commentModel.content"
+          name="content"
+          id="content"
+          autofocus
+          required
+        />
+        <button
+          class="btn ml-5"
+          type="submit"
+          [disabled]="commentForm.invalid"
+          title="Yorum eklemek için tıklayınız"
+        >
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

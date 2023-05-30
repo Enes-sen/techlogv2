@@ -1,0 +1,27 @@
+<div class="container-fluid mt-5">
+  <div class="row align-items-center align-content-center">
+    <div class="col-12 mt-5 ml-5 mb-5">
+      <img
+        style="height: 10rem"
+        *ngIf="user?.profile_image && user.profile_image !== 'default.jpg'; else defaultImage"
+        [src]="serverURL + '/'+ user?.profile_image"
+        class="mx-auto d-block mb-3 rounded-circle"
+      />
+      <ng-template #defaultImage>
+        <img
+          style="height: 10rem;"
+          src="../../assets/Default_p.jpg"
+          class="mx-auto d-block mb-3 rounded-circle"
+        />
+      </ng-template>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="name text-center">
+        <h2 class="display-4" style="color: rgb(0, 255, 0);">{{ getUserName() }}</h2>
+        <a routerLink="/dashboard/uploadimg" class="btn btn-lg ml-5"><i class="fa fa-cloud-upload"></i></a>
+      </div>
+    </div>
+  </div>
+</div>

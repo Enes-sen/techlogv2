@@ -1,0 +1,73 @@
+<div class="container-fluid w-100 mt-5 align-items-center">
+  <h3 class="text-center mb-3"style="margin-top:3em;">{{title}}</h3>
+  <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+    <div class="form-group mb-2">
+      <input
+        style="color: rgb(0, 255, 0)"
+        type="text"
+        class="form-control"
+        placeholder="*Nickname giriniz"
+        #name="ngModel"
+        [(ngModel)]="model.name"
+        name="name"
+        id="name"
+        required
+      />
+      <div *ngIf="name.invalid && name.dirty" class="alert alert-danger">
+        Nickname girmek gereklidir
+      </div>
+    </div>
+    <div class="form-group mb-2">
+      <input
+        style="color: rgb(0, 255, 0)"
+        type="text"
+        class="form-control"
+        placeholder="*E-mail giriniz"
+        #email="ngModel"
+        [(ngModel)]="model.email"
+        name="email"
+        id="email"
+        required
+      />
+      <div *ngIf="email.invalid && email.dirty" class="alert alert-danger">
+        E-mail girmek gereklidir
+      </div>
+    </div>
+    <div class="form-group mb-2">
+      <input
+        style="color: rgb(0, 255, 0)"
+        type="password"
+        class="form-control"
+        placeholder="*Parola belirleyiniz"
+        #password="ngModel"
+        [(ngModel)]="model.password"
+        name="password"
+        id="password"
+        required
+      />
+      <div
+        *ngIf="password.invalid && password.dirty"
+        class="alert alert-danger"
+      >
+        parola girmek gereklidir
+      </div>
+    </div>
+    <button
+      class="btn"
+      type="submit"
+      [disabled]="registerForm.invalid"
+      title="kullanıcı oluşturmak için tıklayınız"
+    >
+    <i class="fa fa-user-plus"></i>
+    </button>
+  </form>
+  <h6>
+    Eğer hesabınız varsa
+    <a
+      *ngIf="!this.loggedIn() || this.loggedIn() === undefined"
+      routerLink="/login"
+      title="giriş yapmak için tıklayınız"
+      ><i class="fa fa-sign-in"></i></a
+    > giriş yapmak için tıklayınız
+  </h6>
+</div>

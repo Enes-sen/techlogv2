@@ -1,0 +1,29 @@
+*{
+  color: rgb(0,255,0);
+}
+
+.btn:hover{
+  color: rgb(0,255,0);
+  background-color: #000;
+  cursor: pointer;
+}
+.btn{
+  height:5rem;
+  width: 5rem;
+  color: rgb(0,255,0);
+  background-color: #000;
+  margin-left: -53%;
+}
+.btn .fa-trash-o{
+  color: rgb(0,255,0);
+  font-size:2em;
+}
+.btn:hover .fa-trash-o{
+  color: rgb(255,0,0);
+  cursor: pointer;
+}
+.img-fluid{
+  width:70%;
+  column-width:10vh;
+  height:800px;
+}

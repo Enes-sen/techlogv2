@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row bg-black mt-3 pt-4 pb-2">
+    <div class="col-lg-8 offset-lg-2 card mt-2 mb-4 bg-black text-success">
+      <a class="btn mt-3 mb-3 ml-5" *ngIf="checkOwner(posted?.user?._id)" (click)="deletePost(posted._id)" title="kaldırmak için için tıklayınız">
+        <i class="fa fa-trash-o"></i>
+      </a>
+      <img *ngIf="posted?.imageUrl" [src]="posted.imageUrl" class="img-fluid mt-3" style="width: 100%; max-height: 600px" />
+      <div class="card-body">
+        <h2 class="card-title text-center">{{ posted?.title }}</h2>
+        <p>{{ posted?.content }}</p>
+      </div>
+      <h6 class="text-center">created-by: {{ posted?.user?.name }}</h6>
+      <h6>posted-time: {{ posted?.createdAt | date: "EEEE, d MMMM y, HH:mm:ss" : "tr" }}</h6>
+    </div>
+    <div class="col-lg-8 offset-lg-2">
+      <app-postcommentsform></app-postcommentsform>
+      <br/>
+      <app-postcomments></app-postcomments>
+    </div>
+  </div>
+</div>

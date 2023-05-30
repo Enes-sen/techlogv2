@@ -1,0 +1,49 @@
+*{
+  background-color: rgba(0, 0,0,0.6);
+}
+
+::placeholder{
+  background-color: rgba(5, 5,5,0.5);
+  color: rgba(0, 180,0,0.9);
+
+}
+:focus{
+  background-color: rgba(10, 10,10,0.5);
+}
+h3{
+  color: rgb(0, 175,0);
+}
+text{
+  color:rgb(0, 255, 0);
+}
+.btn{
+  background-color: rgb(0, 255,0);
+  color: #000;
+}
+.btn:hover{
+  color: rgb(0,255,0);
+  background-color: #000;
+}
+.btn .fa-sign-in{
+  background-color: rgb(0, 255,0);
+  color: #000;
+  height:fit-content;
+  width:fit-content;
+}
+.btn:hover .fa-sign-in{
+  color: rgb(0,255,0);
+  background-color: #000;
+}
+h6{
+  font-size:14px;
+  color: rgb(0, 175,0);
+  text-align: end;
+  padding-bottom: 1%;
+  padding-right: 1%;
+}
+a{
+  color: rgb(0,255,0);
+}
+a:hover{
+  color:rgb(0, 185,0);;
+}

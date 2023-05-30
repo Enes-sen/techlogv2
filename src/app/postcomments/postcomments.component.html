@@ -1,0 +1,54 @@
+<h2 class="text-center">Yorumlar</h2>
+<div *ngFor="let Comment of commentsofpost" class="card align-items-center">
+  <div class="row">
+    <div class="col-2">
+      <img
+        style="height: 2.5rem; width: 2.5rem; margin-left: -89%"
+        *ngIf="
+          Comment.user?.profile_image &&
+            Comment.user?.profile_image !== 'default.jpg';
+          else defaultImage
+        "
+        [src]="serverURL + '/' + Comment.user?.profile_image"
+        class="rounded-circle"
+      />
+
+      <ng-template #defaultImage>
+        <img
+          style="height: 2.5rem; width: 2.5rem; margin-left: -89%"
+          src="../../assets/Default_p.jpg"
+          class="d-block rounded-circle"
+        />
+      </ng-template>
+    </div>
+    <div class="col-10">
+      <div class="row">
+        <div class="col-12 mt-2" style="margin-left: 9.2%">
+          <h5 style="margin-top: -1%; margin-left: 0px">
+            {{ Comment.user.name }}
+          </h5>
+          <h6 style="width: fit-content">
+            date: {{ Comment.createdAt | date : "E/d/MM/yy,HH:m" : "tr" }}
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p style="margin-left: 15%">{{ Comment?.content }}</p>
+  <div class="row">
+    <div class="col-12">
+      <a *ngIf="Comment?.user && checkOwner(Comment?.user?._id) === true" (click)="deleteComment(Comment)" class="btn ml-5">
+        <i class="fa fa-trash-o"></i>
+      </a>
+      <ng-container *ngIf="loggedIn(); else dat">
+        <i class="fa fa-heart-o" *ngIf="!checkLiked(Comment)" (click)="addlike(user?._id, Comment)"></i>
+        <i class="fa fa-heart" *ngIf="checkLiked(Comment)" (click)="dislike(user?._id, Comment)"></i>
+      </ng-container>
+      <ng-template #dat>
+        <i class="fa fa-heart" title="bu özeliği kullanmak için giriş yapınız!" (click)="showAlert()"></i>
+      </ng-template>
+      {{ Comment?.likeCount }}
+    </div>
+
+  </div>
+</div>

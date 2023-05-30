@@ -1,0 +1,37 @@
+.card-img-top{
+  width:40%;
+  height:22rem;
+  margin:auto;
+}
+
+.card{
+  height:25%;
+  margin-bottom: 0.5%;
+  margin-top: 12%;
+  background-color: rgb(0, 0,0);
+  color: rgb(0, 255,0);
+  width: fit-content;
+}
+.fa-heart:hover{
+  cursor: pointer;
+}
+.row{
+  background-color: rgb(0, 0,0);
+  color: rgb(0, 255,0);
+  text-align:center;
+}
+.btn{
+  background-color: rgb(0, 0,0);
+  color: rgb(0, 255,0);
+}
+.btn:hover{
+  background-color: rgb(0, 255,0);
+  color: rgb(0, 0,0);
+}
+.fa-heart-o {
+  color: rgb(210, 0,0);
+}
+
+.fa-heart{
+  color:rgb(0, 255, 0); /* Sonraki renk */
+}

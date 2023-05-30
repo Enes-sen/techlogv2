@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col-md-12" *ngFor="let post of posts">
+      <div class="card mt-5">
+        <img *ngIf="post?.imageUrl" [src]="post.imageUrl" class="img-fluid mt-5" style="width: 74%; margin-left: 15%; max-height: 650px;" />
+        <div class="card-body" style="margin-left: 2%;">
+          <h6 class="text-center">created-by: {{ post.user.name }}</h6>
+          <h3 class="card-title">{{ post.title }}</h3>
+          <p class="card-text" *ngIf="post.content.length > 1030; else shortContent">
+            {{ post.content | slice: 0:1030 }}...
+          </p>
+          <ng-template #shortContent>
+            <p class="card-text">{{ post.content }}</p>
+          </ng-template>
+          <h5>posted-time: {{ post.createdAt | date: 'EEEE, d MMMM y, HH:mm:ss': 'tr' }}</h5>
+          <div class="row">
+            <h6 class="col-12">
+              <i class="fa fa-heart"></i> {{ post.likes.length }}
+              <i class="fa fa-comment"></i> {{ post.commentCount }}
+            </h6>
+          </div>
+          <a class="btn" [routerLink]="'/posts/' + post._id">post'a gidin</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

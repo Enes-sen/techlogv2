@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <h1 class="mt-5 text-center" style="color: rgb(0, 255, 0); margin-top: 5%; margin-bottom: 3%;">
+        Profil resmini seç
+      </h1>
+      <div class="row mt-3">
+        <form style="margin: auto" #uploadForm="ngForm" (ngSubmit)="changeimg(uploadForm)">
+          <div class="form-group text-center">
+            <label class="btn" style="margin-top: 10px; margin-bottom: 24px;" for="image">
+              <input type="file" (change)="readUrl($event)" class="d-none" name="image" id="image" accept="image/*" required/>
+              <i class="fa fa-picture-o" title="Profil fotoğrafını seç" style="font-size: 12rem;"></i>
+            </label>
+          </div>
+          <div class="form-group text-center">
+            <button class="btn" [disabled]="!uploadForm.valid" type="submit" title="Onayla">
+              Onayla
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
