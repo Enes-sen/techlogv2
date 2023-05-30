@@ -11,15 +11,15 @@ import { SinglepostComponent } from './singlepost/singlepost.component';
 import { UploadimageComponent } from './uploadimage/uploadimage.component';
 
 const routes: Routes = [
-  {path:"posts",component:PostsComponent},
-  {path:"posts/:id",component:SinglepostComponent},
-  {path:"*",redirectTo:"posts",pathMatch:"full"},
-  {path:"dashboard",component:DashboardComponent,canActivate:[LoginGuard]},
-  {path:"dashboard/uploadimg",component:UploadimageComponent,canActivate:[LoginGuard]},
-  {path:"help",component:HelpformComponent},
-  {path:"dashboard/newpost",component:AddpostformComponent,canActivate:[LoginGuard]},
-  {path:"login",component:LoginformComponent},
-  {path:"register",component:RegisterformComponent}
+  { path: 'posts', component: PostsComponent },
+  { path: 'posts/:id', component: SinglepostComponent },
+  { path: '*', redirectTo: 'posts', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [LoginGuard] },
+  { path: 'dashboard/uploadimg', component: UploadimageComponent, canActivate: [LoginGuard] },
+  { path: 'help', component: HelpformComponent },
+  { path: 'dashboard/newpost', component: AddpostformComponent, canActivate: [LoginGuard] },
+  { path: 'login', component: LoginformComponent },
+  { path: 'register', component: RegisterformComponent }
 ];
 
 @NgModule({
