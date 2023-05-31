@@ -1,0 +1,5 @@
+{
+  "staticRules": {
+    "/**": "index.html"
+  }
+}
