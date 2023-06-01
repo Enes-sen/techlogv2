@@ -25,11 +25,8 @@
       <div class="row">
         <div class="col-12 mt-2" style="margin-left: 9.2%">
           <h5 style="margin-top: -1%; margin-left: 0px">
-            {{ Comment.user.name }}
+            {{ Comment.user.name }} {{ Comment.createdAt | date : "E/d/MM/yy,HH:m" : "tr" }}
           </h5>
-          <h6 style="width: fit-content">
-            date: {{ Comment.createdAt | date : "E/d/MM/yy,HH:m" : "tr" }}
-          </h6>
         </div>
       </div>
     </div>
