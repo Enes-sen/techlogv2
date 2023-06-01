@@ -1,12 +1,11 @@
-<h2 class="text-center">Yorumlar</h2>
-<div *ngFor="let Comment of commentsofpost" class="card align-items-center">
+<div class="card align-items-center" *ngFor="let Comment of commentsofpost">
   <div class="row">
     <div class="col-2">
       <img
         style="height: 2.5rem; width: 2.5rem; margin-left: -89%"
         *ngIf="
           Comment.user?.profile_image &&
-            Comment.user?.profile_image !== 'default.jpg';
+          Comment.user?.profile_image !== 'default.jpg';
           else defaultImage
         "
         [src]="serverURL + '/' + Comment.user?.profile_image"
@@ -46,6 +45,5 @@
       </ng-template>
       {{ Comment?.likeCount }}
     </div>
-
   </div>
 </div>
