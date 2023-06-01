@@ -5,21 +5,21 @@
         <img *ngIf="post.imageUrl" [src]="post.imageUrl" class="img-fluid" style="width: 74%; margin-left: 15%; max-height: 650px;" />
         <div class="card-body" style="margin-left: 2%;">
           <div class="col-2">
-      <img
-        style="height: 2.5rem; width: 2.5rem; margin-left: -2%"
-        *ngIf="post.user?.profile_image && post.user?.profile_image !== 'default.jpg'; else defaultImage"
-        [src]="serverURL + '/' + post.user?.profile_image"
-        class="rounded-circle"
-      />
+            <img
+              style="height: 2.5rem; width: 2.5rem; margin-left: -2%; position: relative; top: -10px;"
+              *ngIf="post.user?.profile_image && post.user?.profile_image !== 'default.jpg'; else defaultImage"
+              [src]="serverURL + '/' + post.user?.profile_image"
+              class="rounded-circle"
+            />
 
-      <ng-template #defaultImage>
-        <img
-          style="height: 2.5rem; width: 2.5rem; margin-left: -2%"
-          src="../../assets/Default_p.jpg"
-          class="d-block rounded-circle"
-        />
-      </ng-template>
-    </div>
+            <ng-template #defaultImage>
+              <img
+                style="height: 2.5rem; width: 2.5rem; margin-left: -2%; position: relative; top: -10px;"
+                src="../../assets/Default_p.jpg"
+                class="d-block rounded-circle"
+              />
+            </ng-template>
+          </div>
           <h6 class="text-center">{{ post.user?.name }} {{ post.createdAt | date: 'MMM d, yy, h:mm': 'tr' }}</h6>
           <h3 class="card-title">{{ post.title }}</h3>
           <p class="card-text" *ngIf="post.content && post.content.length > 1030; else shortContent">
