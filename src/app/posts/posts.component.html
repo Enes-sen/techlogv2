@@ -7,7 +7,7 @@
           <div class="col-2">
       <img
         style="height: 2.5rem; width: 2.5rem; margin-left: -2%"
-        *ngIf="Comment.user?.profile_image && Comment.user?.profile_image !== 'default.jpg'; else defaultImage"
+        *ngIf="post.user?.profile_image && post.user?.profile_image !== 'default.jpg'; else defaultImage"
         [src]="serverURL + '/' + post.user?.profile_image"
         class="rounded-circle"
       />
