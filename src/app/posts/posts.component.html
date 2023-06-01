@@ -2,50 +2,28 @@
   <div class="row align-items-center">
     <div class="col-md-12" *ngFor="let post of posts">
       <div class="card">
-        <img
-          *ngIf="post.imageUrl"
-          [src]="post.imageUrl"
-          class="img-fluid"
-          style="width: 74%; margin-left: 15%; max-height: 650px"
-        />
-        <div class="card-body" style="margin-left: 2%">
+        <img *ngIf="post.imageUrl" [src]="post.imageUrl" class="img-fluid" style="width: 74%; margin-left: 15%; max-height: 650px;" />
+        <div class="card-body" style="margin-left: 2%;">
           <h6 class="text-center">created-by: {{ post.user?.name }}</h6>
           <h3 class="card-title">{{ post.title }}</h3>
-          <p
-            class="card-text"
-            *ngIf="
-              post.content && post.content.length > 1030;
-              else shortContent
-            "
-          >
-            {{ post.content | slice : 0 : 1030 }}...
+          <p class="card-text" *ngIf="post.content && post.content.length > 1030; else shortContent">
+            {{ post.content | slice: 0:1030 }}...
           </p>
           <ng-template #shortContent>
             <p class="card-text">{{ post.content }}</p>
           </ng-template>
-          <h5>
-            posted-time:
-            {{ post.createdAt | date : "EEEE, d MMMM y, HH:mm:ss" : "tr" }}
-          </h5>
+          <h5>posted-time: {{ post.createdAt | date: 'EEEE, d MMMM y, HH:mm:ss': 'tr' }}</h5>
           <div class="row">
             <div class="col-12">
               <ng-container *ngIf="loggedIn(); else dat">
-                <i
-                  class="fa fa-heart-o"
-                  *ngIf="!checkLiked(user._id)"
-                  (click)="addlike(user._id, post)"
-                ></i>
+                <i class="fa fa-heart-o" *ngIf="!checkLiked(user._id)" (click)="addlike(user._id, post)"></i>
               </ng-container>
               <ng-template #dat>
-                <i
-                  class="fa fa-heart"
-                  title="bu özeliği kullanmak için giriş yapınız!"
-                  (click)="alert()"
-                ></i>
+                <i class="fa fa-heart" title="bu özeliği kullanmak için giriş yapınız!" (click)="alert()"></i>
               </ng-template>
               <i class="fa fa-heart" *ngIf="checkLiked(user?._id)" (click)="dislike(user?._id, post)"></i>
               {{ post.likeCount }}
-              <i class="fa fa-comment"></i>{{ post.commentCount }}
+              <i class="fa fa-comment"></i> {{ post.commentCount }}
             </div>
           </div>
           <a class="btn" [routerLink]="'/posts/' + post._id">post'a gidin</a>
