@@ -9,8 +9,7 @@
         <h2 class="card-title text-center">{{ posted?.title }}</h2>
         <p>{{ posted?.content }}</p>
       </div>
-      <h6 class="text-center">created-by: {{ posted?.user?.name }}</h6>
-      <h6>posted-time: {{ posted?.createdAt | date: "EEEE, d MMMM y, HH:mm:ss" : "tr" }}</h6>
+      <h6 class="text-center">created-by: {{ posted?.user?.name }} {{ posted?.createdAt | date: "EEEE, d MMMM y, HH:mm:ss" : "tr" }}</h6>
     </div>
     <div class="col-lg-8 offset-lg-2">
       <app-postcommentsform></app-postcommentsform>
