@@ -1,11 +1,8 @@
 {
-  "hosting": {
-    "public": "dist",
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
+  "routes": [
+    {
+      "path": "/*",
+      "rewrite": "/index.html"
+    }
+  ]
 }
