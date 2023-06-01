@@ -3,11 +3,7 @@
     <div class="col-2">
       <img
         style="height: 2.5rem; width: 2.5rem; margin-left: -89%"
-        *ngIf="
-          Comment.user?.profile_image &&
-          Comment.user?.profile_image !== 'default.jpg';
-          else defaultImage
-        "
+        *ngIf="Comment.user?.profile_image && Comment.user?.profile_image !== 'default.jpg'; else defaultImage"
         [src]="serverURL + '/' + Comment.user?.profile_image"
         class="rounded-circle"
       />
@@ -22,7 +18,7 @@
     </div>
     <div class="col-10">
       <div class="row">
-        <div class="col-12 mt-2 w-100" style="margin-left: 9.2%">
+        <div class="col-12 mt-2" style="margin-left: 9.2%">
           <h5 style="margin-top: -1%; margin-left: 0px">
             {{ Comment.user.name }} {{ Comment.createdAt | date : "E/d/MM/yy,HH:m" : "tr" }}
           </h5>
@@ -30,7 +26,12 @@
       </div>
     </div>
   </div>
-  <p style="margin-left: 15%">{{ Comment?.content }}</p>
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-10">
+      <p>{{ Comment?.content }}</p>
+    </div>
+  </div>
   <div class="row">
     <div class="col-12">
       <a *ngIf="Comment?.user && checkOwner(Comment?.user?._id) === true" (click)="deleteComment(Comment)" class="btn ml-5">
@@ -41,7 +42,7 @@
         <i class="fa fa-heart" *ngIf="checkLiked(Comment)" (click)="dislike(user?._id, Comment)"></i>
       </ng-container>
       <ng-template #dat>
-        <i class="fa fa-heart" title="bu özeliği kullanmak için giriş yapınız!" (click)="showAlert()"></i>
+        <i class="fa fa-heart" title="bu özelliği kullanmak için giriş yapınız!" (click)="showAlert()"></i>
       </ng-template>
       {{ Comment?.likeCount }}
     </div>
