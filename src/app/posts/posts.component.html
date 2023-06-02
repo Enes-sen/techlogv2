@@ -3,8 +3,8 @@
     <div class="col-md-12" *ngFor="let post of posts">
       <div class="card">
         <div class="row align-items-center" style="margin-top: 15px;">
-          <div class="col-2 ml-2">
-            <ng-container *ngIf="post.user?.profile_image && post.user?.profile_image !== 'default.jpg'; else defaultImage">
+          <div class="col-10">
+             <ng-container *ngIf="post.user?.profile_image && post.user?.profile_image !== 'default.jpg'; else defaultImage">
               <img
                 [src]="serverURL + '/' + post.user?.profile_image"
                 class="rounded-circle"
@@ -18,12 +18,10 @@
                 style="height: 2.5rem; width: 2.5rem;"
               />
             </ng-template>
-          </div>
-          <div class="col-10">
             <div class="d-flex align-items-center">
               <div>
-                <h6 style="margin: 0; display: inline;">{{ post.user?.name }}</h6>
-                <p style="margin: 0; display: inline;">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
+                <h6 style="margin: 0; display: inline; margn-left:5px;">{{ post.user?.name }}</h6>
+                <p style="margin: 0; display: inline; margn-left:5px;">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
               </div>
             </div>
           </div>
