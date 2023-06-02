@@ -8,22 +8,29 @@
               <img
                 [src]="serverURL + '/' + post.user?.profile_image"
                 class="rounded-circle"
-                style="height: 2.5rem; width: 2.5rem; margin-left: auto; margin-right: auto; margin-top: 10px;"
+                style="height: 2.5rem; width: 2.5rem; margin-top: 10px;"
               />
             </ng-container>
             <ng-template #defaultImage>
               <img
                 src="../../assets/Default_p.jpg"
                 class="d-block rounded-circle"
-                style="height: 2.5rem; width: 2.5rem; margin-left: auto; margin-right: auto; margin-top: 10px;"
+                style="height: 2.5rem; width: 2.5rem; margin-top: 10px;"
               />
             </ng-template>
           </div>
           <div class="col-10">
             <div class="d-flex align-items-center">
               <div style="display: flex; align-items: center;">
-                <h6 style="margin: 0;">{{ post.user?.name }}</h6>
-                <p style="margin: 0; margin-left: 0.5rem;">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
+                <img
+                  [src]="serverURL + '/' + post.user?.profile_image"
+                  class="rounded-circle"
+                  style="height: 2.5rem; width: 2.5rem; margin-right: 0.5rem;"
+                />
+                <div>
+                  <h6 style="margin: 0; margin-right: 0.5rem;">{{ post.user?.name }}</h6>
+                  <p style="margin: 0;">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -36,7 +43,7 @@
             <p class="card-text">{{ post.content }}</p>
           </ng-template>
           <img *ngIf="post.imageUrl" [src]="post.imageUrl" class="img-fluid" style="width: 74%; margin-left: 15%; max-height: 650px;" />
-          <div class="row justify-content-center"> <!-- Beğeni ve yorum alanını yatay olarak ortalamak için row'u ortalamak için `justify-content-center` sınıfını ekleyin -->
+          <div class="row justify-content-center">
             <div class="col-12 d-flex justify-content-center align-items-center">
               <ng-container *ngIf="loggedIn(); else dat">
                 <i class="fa fa-heart-o" *ngIf="!checkLiked(user._id)" (click)="addlike(user._id, post)"></i>
