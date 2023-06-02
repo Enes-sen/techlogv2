@@ -17,6 +17,7 @@ export class SinglepostComponent implements OnInit {
   user: User;
   posted: Post;
   postCommentForm: FormGroup;
+  serverURL = 'https://techlog-backend.onrender.com/api/users';
 
   constructor(
     private route: ActivatedRoute,
