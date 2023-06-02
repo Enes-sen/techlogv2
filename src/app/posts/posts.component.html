@@ -4,17 +4,14 @@
       <div class="card-columns">
         <div class="card" *ngFor="let post of posts">
           <div class="card-body">
-            <div class="d-flex align-items-center">
-              <div class="mr-3">
-                <img [src]="post.user?.profile_image" class="rounded-circle" style="height: 40px; width: 40px;">
-              </div>
+            <div class="d-flex align-items-start">
+              <img [src]="post.user?.profile_image" class="rounded-circle mr-3" style="height: 40px; width: 40px;">
               <div>
-                <h6 class="mb-0">{{ post.user?.name }}</h6>
-                <p class="text-muted mb-0">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
+                <h6 class="mb-1">{{ post.user?.name }}</h6>
+                <p class="text-muted mb-1">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
               </div>
             </div>
-            <hr>
-            <p class="card-text">{{ post.content }}</p>
+            <p class="card-text mt-2">{{ post.content }}</p>
             <img *ngIf="post.imageUrl" [src]="post.imageUrl" class="img-fluid mb-3">
             <div class="d-flex justify-content-between align-items-center">
               <div>
