@@ -21,14 +21,16 @@
           </div>
           <div class="col-10">
             <div class="d-flex align-items-center">
-              <img
-                [src]="serverURL + '/' + post.user?.profile_image"
-                class="rounded-circle"
-                style="height: 2.5rem; width: 2.5rem; margin-right: 0.5rem;"
-              />
-              <div>
-                <h6 style="margin: 0;">{{ post.user?.name }}</h6>
-                <p style="margin: 0;">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
+              <div style="display: flex; align-items: center;">
+                <img
+                  [src]="serverURL + '/' + post.user?.profile_image"
+                  class="rounded-circle"
+                  style="height: 2.5rem; width: 2.5rem; margin-right: 0.5rem;"
+                />
+                <div>
+                  <h6 style="margin: 0;">{{ post.user?.name }}</h6>
+                  <p style="margin: 0;">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
+                </div>
               </div>
             </div>
           </div>
