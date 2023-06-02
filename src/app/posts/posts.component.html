@@ -20,13 +20,21 @@
           </div>
           <div class="col-10">
             <div class="d-inline ml-2">
-              <h6>{{ post.user?.name }}</h6>
-              <p>{{ post.createdAt | date: 'MMM d, yy, hh:mm': 'tr' }}</p>
+              <img
+                *ngIf="post.user?.profile_image && post.user?.profile_image !== 'default.jpg'; else defaultImage"
+                [src]="serverURL + '/' + post.user?.profile_image"
+                class="rounded-circle"
+                style="height: 2.5rem; width: 2.5rem; margin-right: 1rem;"
+              />
+              <div style="display: inline-block;">
+                <h6 style="margin: 0;">{{ post.user?.name }}</h6>
+                <p style="margin: 0;">{{ post.createdAt | date: 'MMM d, yy, hh:mm': 'tr' }}</p>
+              </div>
             </div>
           </div>
         </div>
         <div class="card-body" style="margin-left: 2%;">
-            <p class="card-text" *ngIf="post.content && post.content.length > 1030; else shortContent">
+          <p class="card-text" *ngIf="post.content && post.content.length > 1030; else shortContent">
             {{ post.content | slice: 0:1030 }}...
           </p>
           <ng-template #shortContent>
