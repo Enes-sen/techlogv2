@@ -87,8 +87,9 @@ export class PostcommentsformComponent implements OnInit {
           this.alertServ.danger('hata:' + data.message);
         } else {
           this.alertServ.success('yorum eklendi');
+          this.getComments();
           form.resetForm(); // Yorum formunu sıfırla
-          this.commentAdded$.next(); // Yorumlar yeniden yüklensin
+           // Yorumlar yeniden yüklensin
         }
       });
     } else {
