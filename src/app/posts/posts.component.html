@@ -45,7 +45,7 @@
                 <i class="fa fa-heart" title="bu özeliği kullanmak için giriş yapınız!" (click)="alert()"></i>
               </ng-template>
               <i class="fa fa-heart" *ngIf="checkLiked(user?._id)" (click)="dislike(user?._id, post)"></i>
-              <span style="margin-left: 0.5rem;">{{ post.likeCount }}</span>
+              <span style="margin-right: 0.5rem;">{{ post.likeCount }}</span>
               <i class="fa fa-comment"></i> <span>{{ post.commentCount }}</span>
             </div>
           </div>
