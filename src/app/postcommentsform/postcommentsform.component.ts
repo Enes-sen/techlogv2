@@ -89,8 +89,8 @@ addComment(form: NgForm) {
         this.alertServ.danger('Hata:' + data.message);
       } else {
         this.alertServ.success('Yorum eklendi');
-        form.resetForm(); // Yorum formunu sıfırla
         this.getComments(); // Yorumlar yeniden yüklensin
+        form.resetForm(); // Yorum formunu sıfırla
       }
     });
   } else {
