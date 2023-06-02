@@ -8,13 +8,13 @@
               *ngIf="post.user?.profile_image && post.user?.profile_image !== 'default.jpg'; else defaultImage"
               [src]="serverURL + '/' + post.user?.profile_image"
               class="rounded-circle"
-              style="height: 2.5rem; width: 2.5rem; margin-left: 2%; position: relative; top: -10px;"
+              style="height: 2.5rem; width: 2.5rem; margin-left: 25%; position: relative; top: -10px;"
             />
             <ng-template #defaultImage>
               <img
                 src="../../assets/Default_p.jpg"
                 class="d-block rounded-circle"
-                style="height: 2.5rem; width: 2.5rem; margin-left: 2%; position: relative; top: -10px;"
+                style="height: 2.5rem; width: 2.5rem; margin-left: 25%; position: relative; top: -10px;"
               />
             </ng-template>
           </div>
@@ -28,7 +28,7 @@
               />
               <div style="display: inline-block;">
                 <h6 style="margin: 0;">{{ post.user?.name }}</h6>
-                <p style="margin: 0;">{{ post.createdAt | date: 'MMM d, yy, hh:mm': 'tr' }}</p>
+                <p style="margin: 0;">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
               </div>
             </div>
           </div>
