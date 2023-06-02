@@ -8,14 +8,14 @@
               <img
                 [src]="serverURL + '/' + post.user?.profile_image"
                 class="rounded-circle"
-                style="height: 2.5rem; width: 2.5rem; margin-left: auto; margin-right: auto; position: relative; top: -10px;"
+                style="height: 2.5rem; width: 2.5rem; margin-left: auto; margin-right: auto; position: relative; top: 10px;"
               />
             </ng-container>
             <ng-template #defaultImage>
               <img
                 src="../../assets/Default_p.jpg"
                 class="d-block rounded-circle"
-                style="height: 2.5rem; width: 2.5rem; margin-left: auto; margin-right: auto; position: relative; top: -10px;"
+                style="height: 2.5rem; width: 2.5rem; margin-left: auto; margin-right: auto; position: relative; top: 10px;"
               />
             </ng-template>
           </div>
@@ -45,7 +45,7 @@
                 <i class="fa fa-heart" title="bu özeliği kullanmak için giriş yapınız!" (click)="alert()"></i>
               </ng-template>
               <i class="fa fa-heart" *ngIf="checkLiked(user?._id)" (click)="dislike(user?._id, post)"></i>
-              <span style="margin-right: 0.5rem;">{{ post.likeCount }}</span>
+              <span style="margin-left: 0.5rem;">{{ post.likeCount }}</span>
               <i class="fa fa-comment"></i> <span>{{ post.commentCount }}</span>
             </div>
           </div>
