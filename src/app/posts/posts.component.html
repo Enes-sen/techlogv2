@@ -27,7 +27,6 @@
           </div>
         </div>
         <div class="card-body" style="margin-left: 2%;">
-          <h3 class="card-title">{{ post.title }}</h3>
           <p class="card-text" *ngIf="post.content && post.content.length > 1030; else shortContent">
             {{ post.content | slice: 0:1030 }}...
           </p>
