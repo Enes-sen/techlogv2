@@ -4,30 +4,31 @@
       <div class="card">
         <div class="row align-items-center">
           <div class="col-2 ml-2">
-            <img
-              *ngIf="post.user?.profile_image && post.user?.profile_image !== 'default.jpg'; else defaultImage"
-              [src]="serverURL + '/' + post.user?.profile_image"
-              class="rounded-circle"
-              style="height: 2.5rem; width: 2.5rem; margin-left: 2%; position: relative; top: -10px;"
-            />
+            <ng-container *ngIf="post.user?.profile_image && post.user?.profile_image !== 'default.jpg'; else defaultImage">
+              <img
+                [src]="serverURL + '/' + post.user?.profile_image"
+                class="rounded-circle"
+                style="height: 2.5rem; width: 2.5rem; margin-left: auto; margin-right: auto; position: relative; top: -10px;"
+              />
+            </ng-container>
             <ng-template #defaultImage>
               <img
                 src="../../assets/Default_p.jpg"
                 class="d-block rounded-circle"
-                style="height: 2.5rem; width: 2.5rem; margin-left: 2%; position: relative; top: -10px;"
+                style="height: 2.5rem; width: 2.5rem; margin-left: auto; margin-right: auto; position: relative; top: -10px;"
               />
             </ng-template>
           </div>
           <div class="col-10">
             <div class="d-flex align-items-center">
               <img
-                *ngIf="post.user?.profile_image && post.user?.profile_image !== 'default.jpg'; else defaultImage"
                 [src]="serverURL + '/' + post.user?.profile_image"
                 class="rounded-circle"
                 style="height: 2.5rem; width: 2.5rem; margin-right: 0.5rem;"
               />
-              <div style="display: flex; flex-direction: column;">
-                <h6 style="margin: 0;">{{ post.user?.name }}</h6> <p style="margin: 0;">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
+              <div>
+                <h6 style="margin: 0;">{{ post.user?.name }}</h6>
+                <p style="margin: 0;">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
               </div>
             </div>
           </div>
