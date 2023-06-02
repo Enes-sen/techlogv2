@@ -37,7 +37,7 @@ export class CommentService {
     return this.httpReq.post(newpath, data).pipe(
       tap((response) => {
         console.log('comment-data2:', response);
-        this.commentAdded$.next(); // Yorum eklendiğinde commentAdded$ özelliğine sinyal gönderiyoruz
+        this.commentAdded$.next(response); // Yorum eklendiğinde commentAdded$ özelliğine sinyal gönderiyoruz
         return response;
       })
     );
