@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 export class DashboardpostsComponent implements OnInit {
   posts: Post[];
   Id = localStorage.getItem('loggedUser');
+  serverURL = 'https://techlog-backend.onrender.com/api/users';
 
   constructor(private postServ: PostService) {}
 
