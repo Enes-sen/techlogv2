@@ -22,7 +22,8 @@ export class SinglepostComponent implements OnInit {
     private route: ActivatedRoute,
     private postServ: PostService,
     private alertServ: AlertifyService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router:Router,
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +72,7 @@ export class SinglepostComponent implements OnInit {
           this.alertServ.danger(data.message);
         } else {
           this.alertServ.success(data.message);
+         this.router.navigate(['posts']);
         }
       });
     } catch (err: any) {
