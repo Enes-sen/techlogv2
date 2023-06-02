@@ -74,13 +74,15 @@ export class PostcommentsformComponent implements OnInit {
     return this.authServ.loggedinuser;
   }
 
- addComment(form: NgForm) {
+addComment(form: NgForm) {
   if (form.invalid) {
     return this.alertServ.danger('Yorum ekleme başarısız!');
   }
+  
   this.commentModel.user = this.user;
   this.commentModel.post = this.comentedpost;
-  if (this.commentModel.user && this.commentModel.post) {
+
+  if (this.commentModel.user !== null && this.commentModel.post !== null) {
     this.commentServ.AddnewComment(this.commentModel).subscribe((data) => {
       console.log('data of comment:', data);
       if (data.success === false) {
@@ -95,5 +97,6 @@ export class PostcommentsformComponent implements OnInit {
     this.alertServ.danger('Beklenmedik bir hata oluştu!');
   }
 }
+
 
 }
