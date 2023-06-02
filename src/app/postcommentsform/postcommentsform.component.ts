@@ -45,7 +45,7 @@ export class PostcommentsformComponent implements OnInit {
         try {
           this.comentedpost = data.post;
           console.log('comentpost:', this.comentedpost);
-          this.getComments(); // Fetch comments initially
+          this.getComments(); // İlk başta yorumları getir
         } catch (err) {
           console.log('hata:', err.message);
           this.alertServ.danger(err.message);
@@ -53,7 +53,7 @@ export class PostcommentsformComponent implements OnInit {
       });
     });
 
-    // Değişiklikleri dinlemek için commentAdded$ aboneliği ekle
+    // commentAdded$'a abone olarak değişiklikleri dinle
     this.commentAdded$.subscribe(() => {
       this.getComments();
     });
@@ -89,7 +89,7 @@ export class PostcommentsformComponent implements OnInit {
           this.alertServ.danger('Hata:' + data.message);
         } else {
           this.alertServ.success('Yorum eklendi');
-          this.commentAdded$.next(undeifned); // Yeni yorum eklendiğinde güncellemeyi tetikle
+          this.commentAdded$.next(); // Yeni yorum eklendiğinde güncellemeyi tetikle
           form.resetForm(); // Yorum formunu sıfırla
         }
       });
