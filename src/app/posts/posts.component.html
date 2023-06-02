@@ -1,53 +1,32 @@
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-12" *ngFor="let post of posts">
-      <div class="card">
-        <div class="row align-items-center" style="margin-top: 15px;">
-          <div class="col-10">
-             <ng-container *ngIf="post.user?.profile_image && post.user?.profile_image !== 'default.jpg'; else defaultImage">
-              <img
-                [src]="serverURL + '/' + post.user?.profile_image"
-                class="rounded-circle"
-                style="height: 2.5rem; width: 2.5rem;"
-              />
-            </ng-container>
-            <ng-template #defaultImage>
-              <img
-                src="../../assets/Default_p.jpg"
-                class="d-block rounded-circle"
-                style="height: 2.5rem; width: 2.5rem;"
-              />
-            </ng-template>
+    <div class="col-md-12">
+      <div class="card-columns">
+        <div class="card" *ngFor="let post of posts">
+          <div class="card-body">
             <div class="d-flex align-items-center">
+              <div class="mr-3">
+                <img [src]="post.user?.profile_image" class="rounded-circle" style="height: 40px; width: 40px;">
+              </div>
               <div>
-                <h6 style="margin: 0; display: inline; margn-left:5px;">{{ post.user?.name }}</h6>
-                <p style="margin: 0; display: inline; margn-left:5px;">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
+                <h6 class="mb-0">{{ post.user?.name }}</h6>
+                <p class="text-muted mb-0">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="card-body" style="margin-left: 2%;">
-          <p class="card-text" *ngIf="post.content && post.content.length > 1030; else shortContent">
-            {{ post.content | slice: 0:1030 }}...
-          </p>
-          <ng-template #shortContent>
+            <hr>
             <p class="card-text">{{ post.content }}</p>
-          </ng-template>
-          <img *ngIf="post.imageUrl" [src]="post.imageUrl" class="img-fluid" style="width: 74%; margin-left: 15%; max-height: 650px;" />
-          <div class="row justify-content-center">
-            <div class="col-12 d-flex justify-content-center align-items-center">
-              <ng-container *ngIf="loggedIn(); else dat">
-                <i class="fa fa-heart-o" *ngIf="!checkLiked(user._id)" (click)="addlike(user._id, post)"></i>
-              </ng-container>
-              <ng-template #dat>
-                <i class="fa fa-heart" title="bu özeliği kullanmak için giriş yapınız!" (click)="alert()"></i>
-              </ng-template>
-              <i class="fa fa-heart" *ngIf="checkLiked(user?._id)" (click)="dislike(user?._id, post)"></i>
-              <span style="margin-right: 0.5rem;">{{ post.likeCount }}</span>
-              <i class="fa fa-comment"></i> <span>{{ post.commentCount }}</span>
+            <img *ngIf="post.imageUrl" [src]="post.imageUrl" class="img-fluid mb-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <i class="fa fa-heart mr-1" *ngIf="checkLiked(user?._id)" (click)="dislike(user?._id, post)"></i>
+                <i class="fa fa-heart-o mr-1" *ngIf="!checkLiked(user?._id)" (click)="addlike(user?._id, post)"></i>
+                <span class="mr-2">{{ post.likeCount }}</span>
+                <i class="fa fa-comment mr-1"></i>
+                <span>{{ post.commentCount }}</span>
+              </div>
+              <a class="btn btn-primary" [routerLink]="'/posts/' + post._id">Post'a Git</a>
             </div>
           </div>
-          <a class="btn" [routerLink]="'/posts/' + post._id">post'a gidin</a>
         </div>
       </div>
     </div>
