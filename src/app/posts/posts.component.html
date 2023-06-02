@@ -13,16 +13,18 @@
                   <img src="../../assets/Default_p.jpg" class="d-block rounded-circle" style="height: 40px; width: 40px;">
                 </ng-template>
               </div>
-              <div>
-                <h6 class="mb-1">{{ post.user?.name }}</h6>
-                <p class="text-muted mb-1">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
+              <div class="d-flex flex-column">
+                <div class="d-flex align-items-center">
+                  <h6 class="mb-1 mr-2">{{ post.user?.name }}</h6>
+                  <p class="text-muted mb-1">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
+                </div>
               </div>
             </div>
             <p class="card-text mt-2">{{ post.content }}</p>
             <img *ngIf="post.imageUrl" [src]="post.imageUrl" class="img-fluid mb-3" style="width: 100%;">
             <div class="d-flex justify-content-between align-items-center">
               <div>
-                <ng-container *ngIf="loggedIn()===false; else dat">
+                <ng-container *ngIf="loggedIn(); else dat">
                   <i class="fa fa-heart-o mr-1" (click)="alert()" title="Bu özelliği kullanmak için giriş yapmanız gerekmektedir"></i>
                 </ng-container>
                 <ng-template #dat>
