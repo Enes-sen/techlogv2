@@ -4,19 +4,24 @@
       <div class="card-columns">
         <div class="card" *ngFor="let post of posts">
           <div class="card-body">
-            <div class="d-flex align-items-start">
-              <img [src]="serverURL + '/' + post.user?.profile_image" class="rounded-circle mr-3" style="height: 40px; width: 40px;">
+            <div class="d-flex align-items-center mb-3">
+              <img [src]="post.user?.profile_image" class="rounded-circle mr-3" style="height: 40px; width: 40px;">
               <div>
                 <h6 class="mb-1">{{ post.user?.name }}</h6>
                 <p class="text-muted mb-1">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
               </div>
             </div>
             <p class="card-text mt-2">{{ post.content }}</p>
-            <img *ngIf="post.imageUrl" [src]="post.imageUrl" class="img-fluid mb-3">
+            <img *ngIf="post.imageUrl" [src]="post.imageUrl" class="img-fluid mb-3" style="width: 100%;">
             <div class="d-flex justify-content-between align-items-center">
               <div>
-                <i class="fa fa-heart mr-1" *ngIf="checkLiked(user?._id)" (click)="dislike(user?._id, post)"></i>
-                <i class="fa fa-heart-o mr-1" *ngIf="!checkLiked(user?._id)" (click)="addlike(user?._id, post)"></i>
+                <ng-container *ngIf="loggedIn(); else dat">
+                  <i class="fa fa-heart-o mr-1" (click)="alert()" title="Bu özelliği kullanmak için giriş yapmanız gerekmektedir"></i>
+                </ng-container>
+                <ng-template #dat>
+                  <i class="fa fa-heart mr-1" *ngIf="checkLiked(user?._id)" (click)="dislike(user?._id, post)"></i>
+                  <i class="fa fa-heart-o mr-1" *ngIf="!checkLiked(user?._id)" (click)="addlike(user?._id, post)"></i>
+                </ng-template>
                 <span class="mr-2">{{ post.likeCount }}</span>
                 <i class="fa fa-comment mr-1"></i>
                 <span>{{ post.commentCount }}</span>
