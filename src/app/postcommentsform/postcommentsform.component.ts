@@ -74,29 +74,27 @@ export class PostcommentsformComponent implements OnInit {
     return this.authServ.loggedinuser;
   }
 
-addComment(form: NgForm) {
-  if (form.invalid) {
-    return this.alertServ.danger('Yorum ekleme başarısız!');
+  addComment(form: NgForm) {
+    if (form.invalid) {
+      return this.alertServ.danger('Yorum ekleme başarısız!');
+    }
+    
+    this.commentModel.user = this.user;
+    this.commentModel.post = this.comentedpost;
+
+    if (this.commentModel.user !== null && this.commentModel.post !== null) {
+      this.commentServ.AddnewComment(this.commentModel).subscribe((data) => {
+        console.log('data of comment:', data);
+        if (data.success === false) {
+          this.alertServ.danger('Hata:' + data.message);
+        } else {
+          this.alertServ.success('Yorum eklendi');
+          this.commentAdded$.next(undeifned); // Yeni yorum eklendiğinde güncellemeyi tetikle
+          form.resetForm(); // Yorum formunu sıfırla
+        }
+      });
+    } else {
+      this.alertServ.danger('Beklenmedik bir hata oluştu!');
+    }
   }
-  
-  this.commentModel.user = this.user;
-  this.commentModel.post = this.comentedpost;
-
-  if (this.commentModel.user !== null && this.commentModel.post !== null) {
-    this.commentServ.AddnewComment(this.commentModel).subscribe((data) => {
-      console.log('data of comment:', data);
-      if (data.success === false) {
-        this.alertServ.danger('Hata:' + data.message);
-      } else {
-        this.alertServ.success('Yorum eklendi');
-        this.getComments(); // Yorumlar yeniden yüklensin
-        form.resetForm(); // Yorum formunu sıfırla
-      }
-    });
-  } else {
-    this.alertServ.danger('Beklenmedik bir hata oluştu!');
-  }
-}
-
-
 }
