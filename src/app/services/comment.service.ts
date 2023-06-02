@@ -32,21 +32,21 @@ export class CommentService {
   }
 
   AddnewComment(data: CommEnt): Observable<any> {
-    try {
-      let newpath = this.path + '/addNew';
-      return this.httpReq.post(newpath, data).pipe(
-        tap((data) => {
-          console.log("comment-data2:", data);
-          this.commentAdded$.next(data); // Yorum eklendiğinde commentAdded$ özelliğine veri gönderiyoruz
-          return data;
-        })
-      );
-    } catch (err) {
-      console.log("message of err:", err);
-      let error = err;
-      return error;
-    }
+  try {
+    let newpath = this.path + '/addNew';
+    return this.httpReq.post(newpath, data).pipe(
+      tap((response) => {
+        console.log('comment-data2:', response);
+        this.commentAdded$.next(); // Yorum eklendiğinde commentAdded$ özelliğine sinyal gönderiyoruz
+        return response;
+      })
+    );
+  } catch (err) {
+    console.log('message of err:', err);
+    let error = err;
+    return error;
   }
+}
 
   deleteComment(comment: CommEnt): Observable<any> {
     let newPath = `${this.path}/delete/${comment._id}`;
