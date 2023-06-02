@@ -52,11 +52,11 @@ export class PostcommentsformComponent implements OnInit {
         }
       });
     });
-
-    // commentAdded$'a abone olarak değişiklikleri dinle
-    this.commentAdded$.subscribe(() => {
-      this.getComments();
-    });
+  }
+   ngOnChanges(changes: SimpleChanges) {
+    if (changes['commentsofpost']) {
+      console.log('commentsofpost değişti:', this.commentsofpost);
+    }
   }
 
   getComments(): void {
@@ -89,7 +89,7 @@ export class PostcommentsformComponent implements OnInit {
           this.alertServ.danger('Hata:' + data.message);
         } else {
           this.alertServ.success('Yorum eklendi');
-          this.commentAdded$.next(); // Yeni yorum eklendiğinde güncellemeyi tetikle
+          this.getComments(); // Yeni yorum eklendiğinde güncellemeyi tetikle
           form.resetForm(); // Yorum formunu sıfırla
         }
       });
