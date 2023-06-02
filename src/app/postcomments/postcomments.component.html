@@ -37,7 +37,7 @@
       <a *ngIf="Comment?.user && checkOwner(Comment?.user?._id) === true" (click)="deleteComment(Comment)" class="btn ml-5">
         <i class="fa fa-trash-o"></i>
       </a>
-      <ng-container *ngIf="loggedIn(); else dat">
+      <ng-container *ngIf="loggedIn()!==false; else dat">
         <i class="fa fa-heart-o" *ngIf="!checkLiked(Comment)" (click)="addlike(user?._id, Comment)"></i>
         <i class="fa fa-heart" *ngIf="checkLiked(Comment)" (click)="dislike(user?._id, Comment)"></i>
       </ng-container>
