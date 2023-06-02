@@ -4,7 +4,6 @@ import { User } from "../registerform/user";
 export class Post {
   _id: string;
   imageUrl: string;
-  title: string;
   content: string;
   createdAt: Date;
   likeCount: number;
