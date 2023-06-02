@@ -5,7 +5,14 @@
         <div class="card" *ngFor="let post of posts">
           <div class="card-body">
             <div class="d-flex align-items-center mb-3">
-              <img [src]="post.user?.profile_image" class="rounded-circle mr-3" style="height: 40px; width: 40px;">
+              <div class="mr-3">
+                <ng-container *ngIf="post.user?.profile_image && post.user?.profile_image !== 'default.jpg'; else defaultImage">
+                  <img [src]="serverURL + '/' + post.user?.profile_image" class="rounded-circle" style="height: 40px; width: 40px;">
+                </ng-container>
+                <ng-template #defaultImage>
+                  <img src="../../assets/Default_p.jpg" class="d-block rounded-circle" style="height: 40px; width: 40px;">
+                </ng-template>
+              </div>
               <div>
                 <h6 class="mb-1">{{ post.user?.name }}</h6>
                 <p class="text-muted mb-1">{{ post.createdAt | date: 'MMM d, yy, HH:mm': 'tr' }}</p>
@@ -15,7 +22,7 @@
             <img *ngIf="post.imageUrl" [src]="post.imageUrl" class="img-fluid mb-3" style="width: 100%;">
             <div class="d-flex justify-content-between align-items-center">
               <div>
-                <ng-container *ngIf="loggedIn(); else dat">
+                <ng-container *ngIf="loggedIn()===false; else dat">
                   <i class="fa fa-heart-o mr-1" (click)="alert()" title="Bu özelliği kullanmak için giriş yapmanız gerekmektedir"></i>
                 </ng-container>
                 <ng-template #dat>
