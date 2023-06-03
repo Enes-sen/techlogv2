@@ -9,15 +9,13 @@ import { Post } from '../addpostform/post';
 export class PostService {
   postAdded$: Subject<any> = new Subject<any>();
 
-  private baseUrl = 'http://localhost:3000/api/posts';
-
   constructor(private httpReq: HttpClient) { }
   
   // Diğer metodlar...
 
   createPost(post: Post): Observable<any> {
     try {
-      let newpath = this.baseUrl + "/new";
+      let newpath = this.path + "/new";
       return this.httpReq.post(newpath, post).pipe(
         tap(data => {
           console.log(data._id);
@@ -32,7 +30,7 @@ export class PostService {
   }
 
   deletePost(id: string): Observable<any> {
-    let newPath = this.baseUrl + "/delete/" + id;
+    let newPath = this.path + "/delete/" + id;
     return this.httpReq.delete(newPath).pipe(
       tap(data => {
         console.log("delete res:", data);
@@ -42,7 +40,7 @@ export class PostService {
   }
 
   addLike(id: string, userId: string): Observable<any> {
-    let newPath = `${this.baseUrl}/like/${id}/${userId}`;
+    let newPath = `${this.path}/like/${id}/${userId}`;
     return this.httpReq.get(newPath).pipe(
       tap(data => {
         console.log("data of postLike:", data);
@@ -52,7 +50,7 @@ export class PostService {
   }
 
   disLike(id: string, userId: string): Observable<any> {
-    let newPath = `${this.baseUrl}/dislike/${id}/${userId}`;
+    let newPath = `${this.path}/dislike/${id}/${userId}`;
     return this.httpReq.get(newPath).pipe(
       tap(data => {
         console.log("data of postDisLike:", data);
