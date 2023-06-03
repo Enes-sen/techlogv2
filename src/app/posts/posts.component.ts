@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Post } from '../addpostform/post';
 import { AlertifyService } from '../services/alertify.service';
 import { AuthService } from '../services/auth.service';
@@ -9,7 +9,7 @@ import { PostService } from '../services/post.service';
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css']
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit, OnChanges {
   posts: Post[] = [];
   user: any;
   serverURL = 'https://techlog-backend.onrender.com/api/users';
@@ -22,6 +22,14 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPosts();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.posts) {
+      // posts değişkeninde bir değişiklik olduğunda burası çalışır
+      console.log('Posts değişti:', this.posts);
+      // Değişimle ilgili başka işlemler yapabilirsiniz.
+    }
   }
 
   getPosts(): void {
