@@ -1,43 +1,46 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable,tap, throwError} from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { Post } from '../addpostform/post';
+
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
-  constructor(private httpReq:HttpClient) { }
-  path="https://techlog-backend.onrender.com/api/posts";
+  constructor(private httpReq: HttpClient) { }
+  path = "https://techlog-backend.onrender.com/api/posts";
 
-  getall():Observable<any>{
+  getall(): Observable<any> {
     try {
-      let newpath =this.path+"/All";
-      return this.httpReq.get(newpath).pipe(tap(data=>{
-        console.log(data);
-        return data;
-      }));
+      let newpath = this.path + "/All";
+      return this.httpReq.get(newpath).pipe(
+        tap(data => {
+          console.log(data);
+          return data;
+        })
+      );
     } catch (err) {
-      console.log("message of err:",err.message);
-      let error= err;
-      return error;
+      console.log("message of err:", err.message);
+      return throwError(err);
     }
-  };
-  getPostsByUserId(Id:string): Observable<any> {
+  }
+
+  getPostsByUserId(Id: string): Observable<any> {
     try {
-      let newPath = this.path + "/All/" + Id; // add userId to the URL
+      let newPath = this.path + "/All/" + Id;
       return this.httpReq.get(newPath).pipe(
         tap(data => {
-          console.log("userid:",data.userid,"data:",data);
+          console.log("userid:", data.userid, "data:", data);
           return data;
         })
       );
     } catch (err) {
       console.log("Error message:", err);
-      let error = err;
-      return error;
+      return throwError(err);
     }
   }
+
   getOne(id: string): Observable<any> {
     let newPath = this.path + "/one/" + id;
     return this.httpReq.get(newPath).pipe(
@@ -51,39 +54,45 @@ export class PostService {
     );
   }
 
-
-
-
-  createPost(post:Post):Observable<any>{
+  createPost(post: Post): Observable<any> {
     try {
-      let newpath =this.path+"/new";
-      return this.httpReq.post(newpath,post).pipe(tap(data=>{
-        console.log(data._id);
-        return data;
-      }));
+      let newpath = this.path + "/new";
+      return this.httpReq.post(newpath, post).pipe(
+        tap(data => {
+          console.log(data._id);
+          return data;
+        })
+      );
     } catch (err) {
-      console.log("message of err:",err);
-      let error= err;
-      return error;
+      console.log("message of err:", err);
+      return throwError(err);
     }
-  };
-  deletepost(id:string):Observable<any>{
-    let newPath = this.path+"/delete/"+id;
-    return this.httpReq.delete(newPath).pipe(tap(data=>{
-      console.log("delet res:",data);
-    }))
-  }
-  addLike(id:string,userid:string): Observable<any>{
-    let newPath = `${this.path}/like/${id}/${userid}`;
-    return this.httpReq.get(newPath).pipe(tap(data=>{
-      console.log("data of postLike:",data);
-    }));
-  }
-  disLike(id:string,userid:string): Observable<any>{
-    let newPath = `${this.path}/dislike/${id}/${userid}`;
-    return this.httpReq.get(newPath).pipe(tap(data=>{
-      console.log("data of postDisLike:",data);
-    }));
   }
 
+  deletePost(id: string): Observable<any> {
+    let newPath = this.path + "/delete/" + id;
+    return this.httpReq.delete(newPath).pipe(
+      tap(data => {
+        console.log("delete res:", data);
+      })
+    );
+  }
+
+  addLike(id: string, userId: string): Observable<any> {
+    let newPath = `${this.path}/like/${id}/${userId}`;
+    return this.httpReq.get(newPath).pipe(
+      tap(data => {
+        console.log("data of postLike:", data);
+      })
+    );
+  }
+
+  disLike(id: string, userId: string): Observable<any> {
+    let newPath = `${this.path}/dislike/${id}/${userId}`;
+    return this.httpReq.get(newPath).pipe(
+      tap(data => {
+        console.log("data of postDisLike:", data);
+      })
+    );
+  }
 }
