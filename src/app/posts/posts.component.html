@@ -28,8 +28,8 @@
                   <i class="fa fa-heart-o mr-1" (click)="alert()" title="Bu özelliği kullanmak için giriş yapmanız gerekmektedir"></i>
                 </ng-container>
                 <ng-template #dat>
-                  <i class="fa fa-heart mr-1" *ngIf="checkLiked(user?._id)" (click)="dislike(user?._id, post)"></i>
-                  <i class="fa fa-heart-o mr-1" *ngIf="!checkLiked(user?._id)" (click)="addlike(user?._id, post)"></i>
+                  <i class="fa fa-heart mr-1" *ngIf="checkLiked(user?._id)" (click)="dislike(post)"></i>
+                  <i class="fa fa-heart-o mr-1" *ngIf="!checkLiked(user?._id)" (click)="addlike(post)"></i>
                 </ng-template>
                 <span class="mr-2">{{ post.likeCount }}</span>
                 <i class="fa fa-comment mr-1"></i>
