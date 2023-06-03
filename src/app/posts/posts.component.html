@@ -27,7 +27,7 @@
                 <ng-container *ngIf="loggedIn()===true; else dat">
                   <i
                   class="fa fa-heart"
-                  *ngIf="!checkLiked(post.user._id)"
+                  *ngIf="!checkLiked(user._id)"
                   (click)="addlike(user._id, post)"
                 ></i>
                  <i
