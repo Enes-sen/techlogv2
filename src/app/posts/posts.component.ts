@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Post } from '../addpostform/post';
 import { AlertifyService } from '../services/alertify.service';
 import { AuthService } from '../services/auth.service';
@@ -9,11 +9,10 @@ import { PostService } from '../services/post.service';
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css']
 })
-export class PostsComponent implements OnInit, OnChanges {
+export class PostsComponent implements OnInit {
   posts: Post[] = [];
   user: any;
-  path: string = "/";
-  serverURL = 'https://techlog-backend.onrender.com/api/users'; 
+  serverURL = 'https://techlog-backend.onrender.com/api/users';
 
   constructor(
     private postServ: PostService,
@@ -23,14 +22,6 @@ export class PostsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.getPosts();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['posts']) {
-      // posts değişkeninde bir değişiklik olduğunda burası çalışır
-      console.log('Posts değişti:', this.posts);
-      // Değişimle ilgili başka işlemler yapabilirsiniz.
-    }
   }
 
   getPosts(): void {
@@ -49,8 +40,6 @@ export class PostsComponent implements OnInit, OnChanges {
         const dateB = new Date(b.createdAt);
         return dateB.getTime() - dateA.getTime();
       });
-
-      this.loggedIn(); // loggedIn() yöntemini burada çağırın
     });
   }
 
@@ -62,11 +51,11 @@ export class PostsComponent implements OnInit, OnChanges {
     return userId === this.user?._id;
   }
 
-  checkLiked(userId: string): boolean {
-    return this.posts.some((post) => post.likes.includes(userId));
+  checkLiked(userId: string, post: Post): boolean {
+    return post.likes.includes(userId);
   }
 
-  dislike(id: string, post: Post) {
+  dislike(id: string, post: Post): void {
     try {
       this.postServ.disLike(post._id, id).subscribe((data) => {
         if (data.success === false) {
@@ -82,11 +71,11 @@ export class PostsComponent implements OnInit, OnChanges {
     }
   }
 
-  alert() {
+  alert(): void {
     this.alertServ.danger("Bu özelliği kullanmak için giriş yapmanız gerekmektedir.");
   }
 
-  addlike(id: string, post: Post) {
+  addlike(id: string, post: Post): void {
     try {
       this.postServ.addLike(post._id, id).subscribe((data) => {
         if (data.success === false) {
