@@ -27,12 +27,12 @@
                 <ng-container *ngIf="loggedIn()===true; else dat">
                   <i
                   class="fa fa-heart"
-                  *ngIf="!checkLiked(user._id)"
+                  *ngIf="!checkLiked(user?._id, post)"
                   (click)="addlike(user._id, post)"
                 ></i>
                  <i
                   class="fa fa-heart-o"
-                  *ngIf="checkLiked(user._id)"
+                  *ngIf="checkLiked(user?._id, post)"
                   (click)="dislike(user._id, post)"
                 ></i>
                   
