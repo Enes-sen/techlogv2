@@ -13,7 +13,6 @@ export class PostsComponent implements OnInit, OnChanges {
   posts: Post[] = [];
   user: any;
   path: string = "/";
-  serverURL = 'https://techlog-backend.onrender.com/api/users';
 
   constructor(
     private postServ: PostService,
@@ -35,8 +34,6 @@ export class PostsComponent implements OnInit, OnChanges {
 
   getPosts(): void {
     this.postServ.getall().subscribe((data) => {
-      this.user = JSON.parse(localStorage.getItem('loggedUser'));
-
       this.posts = data.posts.map((post) => {
         return {
           ...post,
@@ -44,13 +41,19 @@ export class PostsComponent implements OnInit, OnChanges {
         };
       });
 
+      this.user = JSON.parse(localStorage.getItem('loggedUser'));
+
       this.posts.sort((a, b) => {
         const dateA = new Date(a.createdAt);
         const dateB = new Date(b.createdAt);
         return dateB.getTime() - dateA.getTime();
       });
+
+      this.loggedIn(); // loggedIn() yöntemini burada çağırın
     });
   }
+
+
 
   loggedIn(): boolean {
     return this.authServ.loggedinuser;
@@ -64,18 +67,14 @@ export class PostsComponent implements OnInit, OnChanges {
     return this.posts.some((post) => post.likes.includes(userId));
   }
 
-  alert() {
-    this.alertServ.danger("Bu özelliği kullanmak için giriş yapmanız gerekmektedir.");
-  }
-
-  addlike(post: Post) {
+  dislike(id: string, post: Post) {
     try {
-      this.postServ.addLike(post._id, this.user?._id).subscribe((data) => {
+      this.postServ.disLike(post._id, id).subscribe((data) => {
         if (data.success === false) {
           this.alertServ.danger(data.message);
         } else {
           this.alertServ.success(data.message);
-          post.likes.push(this.user?._id);
+          this.getPosts(); // Posts yeniden yüklensin
         }
       });
     } catch (err) {
@@ -83,15 +82,18 @@ export class PostsComponent implements OnInit, OnChanges {
       this.alertServ.danger('hata:' + err.message);
     }
   }
+  alert() {
+    this.alertServ.danger("Bu özelliği kullanmak için giriş yapmanız gerekmektedir.");
+  }
 
-  dislike(post: Post) {
+  addlike(id: string, post: Post) {
     try {
-      this.postServ.disLike(post._id, this.user?._id).subscribe((data) => {
+      this.postServ.addLike(post._id, id).subscribe((data) => {
         if (data.success === false) {
           this.alertServ.danger(data.message);
         } else {
           this.alertServ.success(data.message);
-          post.likes = post.likes.filter((userId) => userId !== this.user?._id);
+          this.getPosts(); // Posts yeniden yüklensin
         }
       });
     } catch (err) {
