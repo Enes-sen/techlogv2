@@ -23,19 +23,27 @@
             <p class="card-text mt-2 text-left">{{ post.content }}</p>
             <img *ngIf="post.imageUrl" [src]="post.imageUrl" class="img-fluid mb-3" style="width: 100%;">
             <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <ng-container *ngIf="loggedIn(); else notLoggedIn">
-                  <i class="fa" [class.fa-heart-o]="!checkLiked(user?._id, post)" [class.fa-heart]="checkLiked(user?._id, post)" (click)="toggleLike(user?._id, post)"></i>
-                </ng-container>
-                <ng-template #notLoggedIn>
-                  <i class="fa fa-heart mr-1" (click)="alert()" title="Bu özelliği kullanmak için giriş yapmanız gerekmektedir"></i>
-                </ng-template>
-                <span class="mr-2">{{ post.likeCount }}</span>
-                <i class="fa fa-comment mr-1"></i>
-                <span>{{ post.commentCount }}</span>
-              </div>
-              <a class="btn btn-primary" [routerLink]="'/posts/' + post._id">Post'a Git</a>
+              <div class="row">
+            <div class="col-12">
+              <ng-container *ngIf="loggedIn(); else dat">
+                <i
+                  class="fa fa-heart-o"
+                  *ngIf="!checkLiked(user._id)"
+                  (click)="addlike(user._id, post)"
+                ></i>
+              </ng-container>
+              <ng-template #dat>
+                <i
+                  class="fa fa-heart"
+                  title="bu özeliği kullanmak için giriş yapınız!"
+                  (click)="alert()"
+                ></i>
+              </ng-template>
+              <i class="fa fa-heart" *ngIf="checkLiked(user?._id)" (click)="dislike(user?._id, post)"></i>
+              {{ post.likeCount }}
+              <i class="fa fa-comment"></i>{{ post.commentCount }}
             </div>
+          </div>
           </div>
         </div>
       </div>
