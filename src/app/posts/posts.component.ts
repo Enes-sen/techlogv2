@@ -33,14 +33,28 @@ export class PostsComponent implements OnInit, OnChanges {
     }
   }
 
-  getPosts(): void {
-    this.postServ.getall().subscribe((data) => {
-      this.posts = data.posts.map((post) => {
-        return {
-          ...post,
-          postId: post._id
-        };
-      });
+ getPosts(): void {
+  this.postServ.getall().subscribe((data) => {
+    this.posts = data.posts.map((post) => {
+      return {
+        ...post,
+        postId: post._id,
+        likedByCurrentUser: post.likes.includes(this.user?._id) // Kullanıcının beğendiği postları takip etmek için bir alan ekleyin
+      };
+    });
+
+    this.user = JSON.parse(localStorage.getItem('loggedUser'));
+
+    this.posts.sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+      return dateB.getTime() - dateA.getTime();
+    });
+
+    this.loggedIn(); // loggedIn() yöntemini burada çağırın
+  });
+}
+
 
       this.user = JSON.parse(localStorage.getItem('loggedUser'));
 
