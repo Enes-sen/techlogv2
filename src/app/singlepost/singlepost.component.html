@@ -19,10 +19,13 @@
           </div>
         </div>
       </div>
-      <img *ngIf="posted?.imageUrl" [src]="posted.imageUrl" class="img-fluid mt-3" style="width: 100%; max-height: 600px" />
+       <a class="btn mt-3 mb-3 ml-5" *ngIf="checkOwner(posted?.user?._id)" (click)="deletePost(posted._id)" title="kaldırmak için için tıklayınız">
+        <i class="fa fa-trash-o"></i>
+      </a>
       <div class="card-body">
         <p>{{ posted?.content }}</p>
       </div>
+      <img *ngIf="posted?.imageUrl" [src]="posted.imageUrl" class="img-fluid mt-3" style="width: 100%; max-height: 600px" />
     </div>
     <div class="col-lg-8 offset-lg-2">
       <app-postcommentsform></app-postcommentsform>
