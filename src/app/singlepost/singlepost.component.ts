@@ -67,7 +67,7 @@ export class SinglepostComponent implements OnInit {
 
   deletePost(id: string): void {
     try {
-      this.postServ.deletepost(id).subscribe(data => {
+      this.postServ.deletePost(id).subscribe(data => {
         console.log('data of deleted one:', data);
         if (data.success === false) {
           this.alertServ.danger(data.message);
