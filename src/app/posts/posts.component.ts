@@ -34,7 +34,7 @@ export class PostsComponent implements OnInit, OnChanges {
 
   getPosts(): void {
     this.postServ.getall().subscribe((data) => {
-      this.posts = data.posts.map((post) => {
+      const updatedPosts = data.posts.map((post) => {
         return {
           ...post,
           postId: post._id
@@ -43,11 +43,13 @@ export class PostsComponent implements OnInit, OnChanges {
 
       this.user = JSON.parse(localStorage.getItem('loggedUser'));
 
-      this.posts.sort((a, b) => {
+      updatedPosts.sort((a, b) => {
         const dateA = new Date(a.createdAt);
         const dateB = new Date(b.createdAt);
         return dateB.getTime() - dateA.getTime();
       });
+
+      this.posts = updatedPosts;
     });
   }
 
