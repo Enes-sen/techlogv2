@@ -54,8 +54,6 @@ export class PostsComponent implements OnInit, OnChanges {
     });
   }
 
-
-
   loggedIn(): boolean {
     return this.authServ.loggedinuser;
   }
@@ -75,7 +73,7 @@ export class PostsComponent implements OnInit, OnChanges {
           this.alertServ.danger(data.message);
         } else {
           this.alertServ.success(data.message);
-          this.getPosts(); // Posts yeniden yüklensin
+          post.likes = post.likes.filter((like) => like !== id); // Remove the user's like from the post object
         }
       });
     } catch (err) {
@@ -83,6 +81,7 @@ export class PostsComponent implements OnInit, OnChanges {
       this.alertServ.danger('hata:' + err.message);
     }
   }
+
   alert() {
     this.alertServ.danger("Bu özelliği kullanmak için giriş yapmanız gerekmektedir.");
   }
@@ -94,7 +93,7 @@ export class PostsComponent implements OnInit, OnChanges {
           this.alertServ.danger(data.message);
         } else {
           this.alertServ.success(data.message);
-          this.getPosts(); // Posts yeniden yüklensin
+          post.likes.push(id); // Add the user's like to the post object
         }
       });
     } catch (err) {
