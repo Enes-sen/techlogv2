@@ -1,58 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, Observable, tap, throwError, Subject } from 'rxjs';
 import { Post } from '../addpostform/post';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
+  postAdded$: Subject<any> = new Subject<any>();
 
   constructor(private httpReq: HttpClient) { }
-  path = "https://techlog-backend.onrender.com/api/posts";
-
-  getall(): Observable<any> {
-    try {
-      let newpath = this.path + "/All";
-      return this.httpReq.get(newpath).pipe(
-        tap(data => {
-          console.log(data);
-          return data;
-        })
-      );
-    } catch (err) {
-      console.log("message of err:", err.message);
-      return throwError(err);
-    }
-  }
-
-  getPostsByUserId(Id: string): Observable<any> {
-    try {
-      let newPath = this.path + "/All/" + Id;
-      return this.httpReq.get(newPath).pipe(
-        tap(data => {
-          console.log("userid:", data.userid, "data:", data);
-          return data;
-        })
-      );
-    } catch (err) {
-      console.log("Error message:", err);
-      return throwError(err);
-    }
-  }
-
-  getOne(id: string): Observable<any> {
-    let newPath = this.path + "/one/" + id;
-    return this.httpReq.get(newPath).pipe(
-      tap(data => {
-        console.log("onepost:", data);
-      }),
-      catchError(err => {
-        console.log("hata:", err);
-        return throwError(err);
-      })
-    );
-  }
+  
+  // Diğer metodlar...
 
   createPost(post: Post): Observable<any> {
     try {
@@ -60,6 +19,7 @@ export class PostService {
       return this.httpReq.post(newpath, post).pipe(
         tap(data => {
           console.log(data._id);
+          this.postAdded$.next(data); // Yeni bir gönderi oluşturulduğunda postAdded$ özelliğine sinyal gönderiyoruz
           return data;
         })
       );
@@ -74,6 +34,7 @@ export class PostService {
     return this.httpReq.delete(newPath).pipe(
       tap(data => {
         console.log("delete res:", data);
+        this.postAdded$.next(data); // Bir gönderi silindiğinde postAdded$ özelliğine sinyal gönderiyoruz
       })
     );
   }
@@ -83,6 +44,7 @@ export class PostService {
     return this.httpReq.get(newPath).pipe(
       tap(data => {
         console.log("data of postLike:", data);
+        this.postAdded$.next(data); // Bir gönderiye beğeni eklendiğinde postAdded$ özelliğine sinyal gönderiyoruz
       })
     );
   }
@@ -92,6 +54,7 @@ export class PostService {
     return this.httpReq.get(newPath).pipe(
       tap(data => {
         console.log("data of postDisLike:", data);
+        this.postAdded$.next(data); // Bir gönderiden beğeni kaldırıldığında postAdded$ özelliğine sinyal gönderiyoruz
       })
     );
   }
