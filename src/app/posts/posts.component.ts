@@ -40,8 +40,7 @@ export class PostsComponent implements OnInit, OnChanges {
       this.posts = data.posts.map((post) => {
         return {
           ...post,
-          postId: post._id,
-          likedByCurrentUser: post.likes.includes(this.user?._id)
+          postId: post._id
         };
       });
 
@@ -50,8 +49,6 @@ export class PostsComponent implements OnInit, OnChanges {
         const dateB = new Date(b.createdAt);
         return dateB.getTime() - dateA.getTime();
       });
-
-      this.loggedIn();
     });
   }
 
