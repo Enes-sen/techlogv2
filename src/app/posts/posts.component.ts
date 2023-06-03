@@ -13,6 +13,7 @@ export class PostsComponent implements OnInit, OnChanges {
   posts: Post[] = [];
   user: any;
   path: string = "/";
+  serverurl = 'https://techlog-backend.onrender.com/api/users';
 
   constructor(
     private postServ: PostService,
