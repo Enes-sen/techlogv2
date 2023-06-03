@@ -67,39 +67,38 @@ export class PostsComponent implements OnInit, OnChanges {
   checkLiked(userId: string): boolean {
     return this.posts.some((post) => post.likes.includes(userId));
   }
-
-  dislike(id: string, post: Post) {
-    try {
-      this.postServ.disLike(post._id, id).subscribe((data) => {
-        if (data.success === false) {
-          this.alertServ.danger(data.message);
-        } else {
-          this.alertServ.success(data.message);
-          this.getPosts(); // Posts yeniden yüklensin
-        }
-      });
-    } catch (err) {
-      console.log('err:', err.message);
-      this.alertServ.danger('hata:' + err.message);
-    }
-  }
-  alert() {
+alert() {
     this.alertServ.danger("Bu özelliği kullanmak için giriş yapmanız gerekmektedir.");
   }
-
-  addlike(id: string, post: Post) {
-    try {
-      this.postServ.addLike(post._id, id).subscribe((data) => {
-        if (data.success === false) {
-          this.alertServ.danger(data.message);
-        } else {
-          this.alertServ.success(data.message);
-          this.getPosts(); // Posts yeniden yüklensin
-        }
-      });
-    } catch (err) {
-      console.log('err:', err.message);
-      this.alertServ.danger('hata:' + err.message);
-    }
+  addlike(post: Post) {
+  try {
+    this.postServ.addLike(post._id, this.user?._id).subscribe((data) => {
+      if (data.success === false) {
+        this.alertServ.danger(data.message);
+      } else {
+        this.alertServ.success(data.message);
+        post.likes.push(this.user?._id); // Kullanıcının beğendiği postun likes dizisine kullanıcı kimliğini ekleyin
+      }
+    });
+  } catch (err) {
+    console.log('err:', err.message);
+    this.alertServ.danger('hata:' + err.message);
   }
+}
+
+dislike(post: Post) {
+  try {
+    this.postServ.disLike(post._id, this.user?._id).subscribe((data) => {
+      if (data.success === false) {
+        this.alertServ.danger(data.message);
+      } else {
+        this.alertServ.success(data.message);
+        post.likes = post.likes.filter((userId) => userId !== this.user?._id); // Kullanıcının beğenmediği postun likes dizisinden kullanıcı kimliğini çıkarın
+      }
+    });
+  } catch (err) {
+    console.log('err:', err.message);
+    this.alertServ.danger('hata:' + err.message);
+  }
+}
 }
