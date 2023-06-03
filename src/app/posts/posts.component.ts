@@ -3,7 +3,6 @@ import { Post } from '../addpostform/post';
 import { AlertifyService } from '../services/alertify.service';
 import { AuthService } from '../services/auth.service';
 import { PostService } from '../services/post.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-posts',
@@ -13,8 +12,7 @@ import { Subscription } from 'rxjs';
 export class PostsComponent implements OnInit, OnChanges {
   posts: Post[] = [];
   user: any;
-  serverURL = 'https://techlog-backend.onrender.com/api/users';
-  postSubscription: Subscription;
+  path: string = "/";
 
   constructor(
     private postServ: PostService,
@@ -24,32 +22,19 @@ export class PostsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.getPosts();
-    this.postSubscription = this.postServ.postAdded$.subscribe((data) => {
-      // Yeni bir gönderi eklendiğinde veya mevcut bir gönderide değişiklik olduğunda burası çalışır
-      console.log('Yeni gönderi eklendi veya gönderilerde değişiklik oldu:', data);
-      // Değişimle ilgili başka işlemler yapabilirsiniz.
-      this.getPosts(); // Gönderileri yeniden almak için getPosts() metodunu çağırıyoruz
-    });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.posts) {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['posts']) {
       // posts değişkeninde bir değişiklik olduğunda burası çalışır
       console.log('Posts değişti:', this.posts);
       // Değişimle ilgili başka işlemler yapabilirsiniz.
     }
   }
 
-  ngOnDestroy(): void {
-    // Aboneliği iptal ediyoruz
-    if (this.postSubscription) {
-      this.postSubscription.unsubscribe();
-    }
-  }
-
   getPosts(): void {
-    this.postServ.getAll().subscribe((data) => {
-      const updatedPosts = data.map((post) => {
+    this.postServ.getall().subscribe((data) => {
+      this.posts = data.posts.map((post) => {
         return {
           ...post,
           postId: post._id
@@ -58,15 +43,17 @@ export class PostsComponent implements OnInit, OnChanges {
 
       this.user = JSON.parse(localStorage.getItem('loggedUser'));
 
-      updatedPosts.sort((a, b) => {
+      this.posts.sort((a, b) => {
         const dateA = new Date(a.createdAt);
         const dateB = new Date(b.createdAt);
         return dateB.getTime() - dateA.getTime();
       });
 
-      this.posts = updatedPosts;
+      this.loggedIn(); // loggedIn() yöntemini burada çağırın
     });
   }
+
+
 
   loggedIn(): boolean {
     return this.authServ.loggedinuser;
@@ -76,18 +63,18 @@ export class PostsComponent implements OnInit, OnChanges {
     return userId === this.user?._id;
   }
 
-  checkLiked(userId: string, post: Post): boolean {
-    return post.likes.includes(userId);
+  checkLiked(userId: string): boolean {
+    return this.posts.some((post) => post.likes.includes(userId));
   }
 
-  dislike(id: string, post: Post): void {
+  dislike(id: string, post: Post) {
     try {
-      this.postServ.dislike(post._id, id).subscribe((data) => {
+      this.postServ.disLike(post._id, id).subscribe((data) => {
         if (data.success === false) {
           this.alertServ.danger(data.message);
         } else {
           this.alertServ.success(data.message);
-          post.likes = post.likes.filter((like) => like !== id); // Remove the user's like from the post object
+          this.getPosts(); // Posts yeniden yüklensin
         }
       });
     } catch (err) {
@@ -95,19 +82,18 @@ export class PostsComponent implements OnInit, OnChanges {
       this.alertServ.danger('hata:' + err.message);
     }
   }
-
-  alert(): void {
+  alert() {
     this.alertServ.danger("Bu özelliği kullanmak için giriş yapmanız gerekmektedir.");
   }
 
-  addlike(id: string, post: Post): void {
+  addlike(id: string, post: Post) {
     try {
       this.postServ.addLike(post._id, id).subscribe((data) => {
         if (data.success === false) {
           this.alertServ.danger(data.message);
         } else {
           this.alertServ.success(data.message);
-          post.likes.push(id); // Add the user's like to the post object
+          this.getPosts(); // Posts yeniden yüklensin
         }
       });
     } catch (err) {
