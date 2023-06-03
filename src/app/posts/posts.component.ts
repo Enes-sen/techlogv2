@@ -3,6 +3,7 @@ import { Post } from '../addpostform/post';
 import { AlertifyService } from '../services/alertify.service';
 import { AuthService } from '../services/auth.service';
 import { PostService } from '../services/post.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-posts',
@@ -13,6 +14,7 @@ export class PostsComponent implements OnInit, OnChanges {
   posts: Post[] = [];
   user: any;
   serverURL = 'https://techlog-backend.onrender.com/api/users';
+  postSubscription: Subscription;
 
   constructor(
     private postServ: PostService,
@@ -22,6 +24,12 @@ export class PostsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.getPosts();
+    this.postSubscription = this.postServ.postAdded$.subscribe((data) => {
+      // Yeni bir gönderi eklendiğinde veya mevcut bir gönderide değişiklik olduğunda burası çalışır
+      console.log('Yeni gönderi eklendi veya gönderilerde değişiklik oldu:', data);
+      // Değişimle ilgili başka işlemler yapabilirsiniz.
+      this.getPosts(); // Gönderileri yeniden almak için getPosts() metodunu çağırıyoruz
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -32,9 +40,16 @@ export class PostsComponent implements OnInit, OnChanges {
     }
   }
 
+  ngOnDestroy(): void {
+    // Aboneliği iptal ediyoruz
+    if (this.postSubscription) {
+      this.postSubscription.unsubscribe();
+    }
+  }
+
   getPosts(): void {
-    this.postServ.getall().subscribe((data) => {
-      const updatedPosts = data.posts.map((post) => {
+    this.postServ.getAll().subscribe((data) => {
+      const updatedPosts = data.map((post) => {
         return {
           ...post,
           postId: post._id
@@ -67,7 +82,7 @@ export class PostsComponent implements OnInit, OnChanges {
 
   dislike(id: string, post: Post): void {
     try {
-      this.postServ.disLike(post._id, id).subscribe((data) => {
+      this.postServ.dislike(post._id, id).subscribe((data) => {
         if (data.success === false) {
           this.alertServ.danger(data.message);
         } else {
