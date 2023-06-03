@@ -26,8 +26,8 @@
               <div>
                 <ng-container *ngIf="loggedIn()===true; else dat">
                   <i
-                  class="fa fa-heart-o"
-                  *ngIf="!checkLiked(user._id)"
+                  class="fa fa-heart"
+                  *ngIf="!checkLiked(post.user._id)"
                   (click)="addlike(user._id, post)"
                 ></i>
                  <i
@@ -38,7 +38,7 @@
                   
                 </ng-container>
                 <ng-template #dat>
-                 <i class="fa fa-heart-o mr-1" (click)="alert()" title="Bu özelliği kullanmak için giriş yapmanız gerekmektedir"></i>
+                 <i class="fa fa-heart mr-1" (click)="alert()" title="Bu özelliği kullanmak için giriş yapmanız gerekmektedir"></i>
                 </ng-template>
                 <span class="mr-2">{{ post.likeCount }}</span>
                 <i class="fa fa-comment mr-1"></i>
