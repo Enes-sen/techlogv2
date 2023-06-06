@@ -11,7 +11,7 @@ import { CommentService } from '../services/comment.service';
   styleUrls: ['./postcomments.component.css']
 })
 export class PostcommentsComponent implements OnInit, OnChanges {
-  commentsofpost: CommEnt[] = [];
+  commentsofpost: CommEnt[];
   user: any = null;
   id: any;
   serverURL = 'https://techlog-backend.onrender.com/api/users';
@@ -31,11 +31,15 @@ export class PostcommentsComponent implements OnInit, OnChanges {
     this.user = JSON.parse(localStorage.getItem("loggedUser"));
 
     this.getComments();
+    this.commentServ.onCommentAdded().subscribe(() => {
+      // Yorum eklendiğinde yapılacak işlemler
+      this.getComments();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['commentsofpost']) {
-      console.log('commentsofpost değişti:', this.commentsofpost);
+      console.log('commentsofpost değişti:', this.commentsofpost, "changes:", changes);
     }
   }
 
@@ -76,7 +80,7 @@ export class PostcommentsComponent implements OnInit, OnChanges {
         if (data.success === true) {
           this.alertServ.success(data.message);
           this.getComments();
-        }else{
+        } else {
           this.alertServ.danger(data.message);
           this.getComments();
         }
@@ -91,12 +95,16 @@ export class PostcommentsComponent implements OnInit, OnChanges {
   dislike(id: string, comment: CommEnt) {
     if (!id) {
       this.alertServ.danger("Bu özelliği kullanmak için giriş yapmanız gerekmektedir.");
+      return;
     }
 
-    this.commentServ.dislike(comment._id,id).subscribe(
+    this.commentServ.dislike(comment._id, id).subscribe(
       (data) => {
         if (data.success === true) {
           this.alertServ.success(data.message);
+          this.getComments();
+        } else {
+          this.alertServ.danger(data.message);
           this.getComments();
         }
       },
@@ -106,7 +114,6 @@ export class PostcommentsComponent implements OnInit, OnChanges {
       }
     );
   }
-
 
   getComments(): void {
     this.commentServ.getAll(this.id).subscribe(data => {
@@ -120,7 +127,7 @@ export class PostcommentsComponent implements OnInit, OnChanges {
   }
 
   checkLiked(comment: CommEnt): boolean {
-    return this.user && comment?.likes.length>0 && comment.likes.includes(this.user?._id);
+    return this.user && comment?.likes.length > 0 && comment.likes.includes(this.user?._id);
   }
 
   loggedIn(): boolean {
