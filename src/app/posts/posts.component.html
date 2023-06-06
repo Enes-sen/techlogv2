@@ -26,8 +26,7 @@
             <p class="card-text mt-2 text-left">{{ post.content }}</p>
             <img *ngIf="post.imageUrl" [src]="post.imageUrl" class="img-fluid mb-3" style="width: 100%;">
             <div class="d-flex justify-content-between align-items-center">
-              <div class="row">
-                <div class="col-12">
+             <div>
                   <ng-container *ngIf="loggedIn(); else dat">
                     <i class="fa fa-heart-o" *ngIf="!checkLiked(user._id)" (click)="addlike(user._id, post)"></i>
                   </ng-container>
@@ -38,7 +37,6 @@
                   {{ post.likeCount }}
                   <i class="fa fa-comment"></i>{{ post.commentCount }}
                 </div>
-              </div>
               <a class="btn btn-primary" [routerLink]="'/posts/' + post._id">Post'a Git</a>
             </div>
           </div>
