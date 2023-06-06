@@ -1,18 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, ReplaySubject, Subject } from 'rxjs';
 import { CommEnt } from '../postcommentsform/comment';
-import { Subject } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
   constructor(private httpReq: HttpClient) {}
   path = 'https://techlog-backend.onrender.com/api/posts/comments';
-  commentAdded$: Subject<any> = new Subject<any>();
+  private commentAddedSubject = new Subject<void>();
 
+
+  commentAddedSuccessfully() {
+    return this.commentAddedSubject.next()
+  }
+
+  onCommentAdded() {
+    return this.commentAddedSubject.asObservable();
+  }
   onChanges(): Observable<any> {
-    return this.commentAdded$.asObservable();
+    return this.commentAddedSubject.asObservable();
   }
 
   getAll(id: string): Observable<any> {
@@ -20,40 +28,37 @@ export class CommentService {
       let newpath = this.path + '/All/' + id;
       return this.httpReq.get(newpath).pipe(
         tap((data) => {
-          console.log("data of post comments:", data);
-          return data;
+          console.log('delete res:', data);
+          this.commentAddedSubject.next(data);
         })
       );
     } catch (err) {
-      console.log("message of err:", err);
-      let error = err;
-      return error;
+      console.log('message of err:', err);
+      throw err;
     }
   }
 
-  AddnewComment(data: CommEnt): Observable<any> {
-  try {
-    let newpath = this.path + '/addNew';
-    return this.httpReq.post(newpath, data).pipe(
-      tap((response) => {
-        console.log('comment-data2:', response);
-        this.commentAdded$.next(response); // Yorum eklendiğinde commentAdded$ özelliğine sinyal gönderiyoruz
-        return response;
-      })
-    );
-  } catch (err) {
-    console.log('message of err:', err);
-    let error = err;
-    return error;
+  addNewComment(data: CommEnt): Observable<any> {
+    try {
+      let newpath = this.path + '/addNew';
+      return this.httpReq.post(newpath, data).pipe(
+        tap((data) => {
+          console.log('delete res 2:', data);
+          this.commentAddedSubject.next(data);
+        })
+      );
+    } catch (err) {
+      console.log('message of err:', err);
+      throw err;
+    }
   }
-}
 
   deleteComment(comment: CommEnt): Observable<any> {
     let newPath = `${this.path}/delete/${comment._id}`;
     return this.httpReq.delete(newPath).pipe(
       tap((data) => {
-        console.log("delete res:", data);
-        this.commentAdded$.next(data); // Yorum silindiğinde commentAdded$ özelliğine veri gönderiyoruz
+        console.log('delete res:', data);
+        this.commentAddedSubject.next(data);
       })
     );
   }
@@ -61,9 +66,9 @@ export class CommentService {
   addLike(id: string, userid: string): Observable<any> {
     let newPath = `${this.path}/like/${id}/${userid}`;
     return this.httpReq.get(newPath).pipe(
-      tap(data => {
-        console.log("data of commentLike:", data);
-        this.commentAdded$.next(data); // Beğeni eklendiğinde commentAdded$ özelliğine veri gönderiyoruz
+      tap((data) => {
+        console.log('data of commentLike:', data);
+        this.commentAddedSubject.next(data);
       })
     );
   }
@@ -71,9 +76,9 @@ export class CommentService {
   dislike(id: string, userid: string): Observable<any> {
     let newPath = `${this.path}/dislike/${id}/${userid}`;
     return this.httpReq.get(newPath).pipe(
-      tap(data => {
-        console.log("data of commentDisLike:", data);
-        this.commentAdded$.next(data); // Beğeni eklendiğinde commentAdded$ özelliğine veri gönderiyoruz
+      tap((data) => {
+        console.log('data of commentDisLike:', data);
+        this.commentAddedSubject.next(data);
       })
     );
   }
