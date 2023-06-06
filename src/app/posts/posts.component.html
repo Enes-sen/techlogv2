@@ -8,7 +8,7 @@
               <div class="mr-3">
                 <ng-container
                   *ngIf="post.user?.profile_image && post.user?.profile_image !== 'default.jpg'; else defaultImage">
-                  <img [src]="serverURL + '/' + post.user?.profile_image" class="rounded-circle"
+                  <img [src]="serverurl + '/' + post.user?.profile_image" class="rounded-circle"
                     style="height: 40px; width: 40px;">
                 </ng-container>
                 <ng-template #defaultImage>
