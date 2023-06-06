@@ -28,12 +28,12 @@
             <div class="d-flex justify-content-between align-items-center">
              <div>
                   <ng-container *ngIf="loggedIn(); else dat">
-                    <i class="fa fa-heart-o" *ngIf="!checkLiked(user._id)" (click)="addlike(user._id, post)"></i>
+                    <i class="fa fa-heart-o" *ngIf="!checkLiked(post)" (click)="addlike(user._id, post)"></i>
                   </ng-container>
                   <ng-template #dat>
                     <i class="fa fa-heart" title="bu özeliği kullanmak için giriş yapınız!" (click)="alert()"></i>
                   </ng-template>
-                  <i class="fa fa-heart" *ngIf="checkLiked(user?._id)" (click)="dislike(user?._id, post)"></i>
+                  <i class="fa fa-heart" *ngIf="checkLiked(post)" (click)="dislike(user?._id, post)"></i>
                   {{ post.likeCount }}
                   <i class="fa fa-comment"></i>{{ post.commentCount }}
                 </div>
