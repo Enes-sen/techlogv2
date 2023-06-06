@@ -1,8 +1,8 @@
 <div class="container">
-  <div class="row bg-black mt-3 pt-4 pb-2">
+  <div class="row bg-black mt-5 pt-4 pb-2">
     <div class="col-lg-8 offset-lg-2 card mt-2 mb-4 bg-black text-success">
       <div class="d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center mt-2">
           <ng-container *ngIf="posted?.user?.profile_image && posted?.user?.profile_image !== 'default.jpg'; else defaultImage">
             <img [src]="serverURL + '/' + posted?.user?.profile_image" class="rounded-circle" style="height: 40px; width: 40px; margin-right: 10px;">
           </ng-container>
