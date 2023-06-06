@@ -64,8 +64,8 @@ export class PostsComponent implements OnInit, OnChanges {
     return userId === this.user?._id;
   }
 
-  checkLiked(userId: string): boolean {
-    return this.posts.some((post) => post.likes.includes(userId));
+  checkLiked(post: Post): boolean {
+   return this.user && post?.likes.length > 0 && post.likes.includes(this.user?._id);
   }
 
   dislike(id: string, post: Post) {
