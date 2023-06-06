@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommEnt } from '../postcommentsform/comment';
 import { AlertifyService } from '../services/alertify.service';
